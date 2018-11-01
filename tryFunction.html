@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Function</title>
+</head>
+<body>
+    <script>
+        function pickRandomWord (words) {
+            return words[Math.floor(Math.random() * words.length)]
+        }
+        function generateRandonCompliment () {
+            var randomBodyParts = ["улыбка", "фигура", "прическа"];
+            var randomAdjectives = ["прекрасная", "удивительная", "чарующая"];
+            var randomWords = ["звезда", "роза", "бабочка", "сказка", "мечта"];
+            var randomString = "У тебя " + pickRandomWord(randomBodyParts) + " словно " + pickRandomWord(randomAdjectives) + " " + pickRandomWord(randomWords) +"!!!";
+            return randomString;
+        }
+        alert(generateRandonCompliment());
+    </script>
+</body>
+</html>
