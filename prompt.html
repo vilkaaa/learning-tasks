@@ -7,45 +7,74 @@
 <body>
     <h1>Виселица</h1>
     <script>
-        var name = prompt("Как вас зовут?");
-        var wannaPlay = confirm("Привет, " + name + ". Поиграем?"); 
-            if (wannaPlay === false) { 
-                alert("Ну как хочешь.."); 
-            } else { 
+        function pickWord () {
+            //Возвращает выбранное слово
             var words = [
                 "программа",
                 "макака",
                 "прекрасный",
                 "оладушек"
             ];
-            var word = words[Math.floor(Math.random() * words.length)];
+            return words[Math.floor(Math.random() * words.length)];
+        };
+        function setupAnswerArray (word) {
+            //Возвращает массив для букв
             var answerArray = [];
             for (var i = 0; i < word.length; i++) {
                 answerArray[i] = "_";
             }
+            return answerArray;
+        };
+        function showPlayerProgress (answerArray) {
+            //Отображает текущее состояние игры
+            alert(answerArray.join(" "));
+        };
+        function getGuess () {
+            //Запрашивает ответ от игрока
+            return prompt("Угадайте букву или нажмите Отмена для выхода из игры.");
+        };
+        function updateGameState (guess, word, answerArray) {
+            var correct = 0;
+            for (var j = 0; j < word.length; j++) {
+                if (word[j] === guess) {
+                    if (answerArray[j] === "_"){
+                        answerArray[j] = guess;
+                        correct++; 
+                    } else {
+                        alert("Вы уже угадали эту букву!");
+                    }
+                }
+            }
+            return correct;
+        };
+        function showAnswerAndCongratulatePlayer (answerArray) {
+            //Показывает в конце игры слово и поздравляет с победой
+            alert(answerArray.join(" "));
+            alert("Отлично! Было загадано слово '" + word + "'.");
+        };
+
+        var name = prompt("Как вас зовут?");
+        var wannaPlay = confirm("Привет, " + name + ". Поиграем?"); 
+            if (wannaPlay === false) { 
+                alert("Ну как хочешь.."); 
+            } else { 
+            var word = pickWord();
+            var answerArray = setupAnswerArray (word);
             var remainingLetters = word.length;
-            while (remainingLetters > 0) {
-                alert(answerArray.join(" "));
-                var guess = prompt("Угадайте букву или нажмите Отмена для выхода из игры.");
+            while (remainingLetters > 0) 
+            {
+                showPlayerProgress (answerArray);
+                var guess = getGuess();
                 if (guess === null) {
                     break;
                 } else if (guess.length !== 1) {
                     alert("Пожалуйста, введите только одну букву.");
                 } else {
-                    for (var j = 0; j < word.length; j++) {
-                        if (word[j] === guess) {
-                            if (answerArray[j] === "_"){
-                            answerArray[j] = guess;
-                            remainingLetters--; 
-                            } else {
-                                alert("Вы уже угадали эту букву!");
-                            }
-                        }
-                    }
+                    var correctGuesses = updateGameState (guess, word, answerArray);
+                    remainingLetters -= correctGuesses;
                 }
             }
-        alert(answerArray.join(" "));
-        alert("Отлично! Было загадано слово '" + word + "'.");
+            showAnswerAndCongratulatePlayer (answerArray);
         }
     </script>
 </body>
