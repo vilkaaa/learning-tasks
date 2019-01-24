@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интерактивненько</title>
+</head>
+<body>
+    <h1 id="heading">Ещё 10</h1>
+    
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <script>
+        var leftOffset = 0;
+        var topOffset = 0;
+        var rightOffset = 200;
+        var downOffset = 200;
+        var counter = 10;
+
+        function moveHeading () {
+            $("#heading").offset({left:leftOffset});
+            $("#heading").offset({top:topOffset})
+            leftOffset++;
+            if (leftOffset > 200) {
+                leftOffset = 200;
+                topOffset++;
+            }
+            if (topOffset > 200) {
+                topOffset = 200;
+                $("#heading").offset({left:rightOffset});
+                rightOffset--;
+            }
+            if (rightOffset < 1) {
+                rightOffset = 0;
+                $("#heading").offset({top:downOffset})
+                downOffset--;
+            }
+            if (downOffset < 1) {
+                downOffset = 0;
+                leftOffset = 0;
+                $("#heading").offset({left:leftOffset});
+                topOffset = 0;
+                $("#heading").offset({top:topOffset})
+                rightOffset = 200;
+                downOffset = 200;
+                leftOffset++;
+            }
+
+        };
+        var time = 10;
+        function clickFun () {
+            if (counter > 0){
+                time-=1;
+                (clearInterval(intervalId));
+                intervalId = setInterval(moveHeading, time);
+                counter--;                
+            } 
+            $("#heading").text("Ещё " + counter);
+            if (counter == 0) {
+                (clearInterval(intervalId));
+                $("#heading").text("Ты победил!");
+            }
+        };
+
+        var intervalId = setInterval(moveHeading, time);
+        document.getElementById("heading").onclick = clickFun;
+                 
+    </script>
+</body>
+</html>
