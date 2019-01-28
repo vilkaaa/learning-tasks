@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Гонки</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <script>
+        function Car (x, y) {
+            this.x = x;
+            this.y = y;
+            this.draw();
+        };
+
+        Car.prototype.draw = function () {
+            var carHtml = '<img src="http://nostarch.com/images/car.png">';
+            this.carElement = $(carHtml);
+            this.carElement.css({
+                position: "absolute",
+                left: this.x,
+                top: this.y
+            });
+            $("body").append(this.carElement);
+        };
+
+        function getRandomDistance () {
+            return Math.floor(Math.random() * 5);
+        }; 
+
+        Car.prototype.moveRight = function () {
+            var distance = getRandomDistance();
+            getRandomDistance();
+            this.x += distance;
+            this.carElement.css({
+                left: this.x,
+                top: this.y
+            });
+        };
+
+       // var distance = getRandomDistance();
+        var tesla = new Car (20, 20);
+        var nissan = new Car (20, 200);
+
+        setInterval(function () { tesla.moveRight() }, 30); 
+        setInterval(function () { nissan.moveRight() }, 30); 
+    
+    </script>
+</body>
+</html>
