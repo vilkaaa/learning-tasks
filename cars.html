@@ -3,13 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Гонки</title>
+    <style>
+        .finish {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 250px;
+            height: 200px;
+        };
+    </style>
 </head>
 <body>
+    <p id="win"></p>
+    <img class="finish" src="http://cdn.onlinewebfonts.com/svg/img_546444.png">
     <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
     <script>
-        function Car (x, y) {
+        var windowWidth = window.innerWidth;
+        var checkPoint = windowWidth-130;
+        function Car (x, y, name) {
             this.x = x;
             this.y = y;
+            this.name = name;
             this.draw();
         };
 
@@ -25,7 +39,7 @@
         };
 
         function getRandomDistance () {
-            return Math.floor(Math.random() * 5);
+            return Math.ceil(Math.random() * 5);
         }; 
 
         Car.prototype.moveRight = function () {
@@ -36,14 +50,19 @@
                 left: this.x,
                 top: this.y
             });
+            if (this.x >= checkPoint) {
+                (clearInterval(intervalId1));
+                (clearInterval(intervalId2));
+                $("#win").text("Победил " + this.name);
+            }
         };
 
-       // var distance = getRandomDistance();
-        var tesla = new Car (20, 20);
-        var nissan = new Car (20, 200);
+        var tesla = new Car (20, 20 ,"tesla");
+        var nissan = new Car (20, 100, "nissan");
 
-        setInterval(function () { tesla.moveRight() }, 30); 
-        setInterval(function () { nissan.moveRight() }, 30); 
+        var intervalId1 = setInterval(function () {tesla.moveRight ()}, 30);
+        var intervalId2 = setInterval(function () {nissan.moveRight ()}, 30);
+    
     </script>
 </body>
 </html>
