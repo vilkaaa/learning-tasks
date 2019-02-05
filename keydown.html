@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Keydown</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+    <script>
+
+        /*$("body").keydown (function(event) {
+            console.log(keyNames[event.keyCode]);
+        }); */
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        var width = canvas.width;
+        var height = canvas.height; 
+
+        function circle (x, y, r, fill) {
+            ctx.beginPath ();
+            ctx.arc (x, y, r, 0 , Math.PI * 2, false);
+            if (fill) {
+                ctx.fill ();
+            } else {
+                ctx.stroke ();
+            }
+        };
+
+        function Ball () {
+            this.x = width / 2;
+            this.y = height / 2;
+            this.xSpeed = 5;
+            this.ySpeed = 0;
+            this.r = 10;
+        };
+
+        Ball.prototype.move = function () {
+            this.x += this.xSpeed;
+            this.y += this.ySpeed;
+
+            if (this.x < 0) {
+                this.x = width;
+            } else if (this.x > width) {
+                this.x = 0;
+            }
+            if (this.y < 0) {
+                this.y = height;
+            } else if (this.y > height) {
+                this.y = 0;
+            }
+        };
+
+        Ball.prototype.keyPress = function (direction) {
+            /*switch(direction) {
+                case "W":
+                    this.xSpeed = 0;
+                    this.ySpeed = -5;
+                break;
+                case "A":
+                    this.xSpeed = -5;
+                    this.ySpeed = 0;
+                break;
+                case "S":
+                    this.xSpeed = 0;
+                    this.ySpeed = 5;
+                break;
+                case "D":
+                    this.xSpeed = 5;
+                    this.ySpeed = 0;
+                break;
+                case "Space":
+                    this.xSpeed = 0;
+                    this.ySpeed = 0;
+                break;
+            }*/
+
+            if (direction === "W" || direction === "Up") {
+                this.xSpeed = 0;
+                this.ySpeed = -5;
+            } else if (direction === "S" || direction === "Down") {
+                this.xSpeed = 0;
+                this.ySpeed = 5;
+            } else if (direction === "A" || direction === "Left") {
+                this.xSpeed = -5;
+                this.ySpeed = 0;
+            } else if (direction === "D" || direction === "Right") {
+                this.xSpeed = 5;
+                this.ySpeed = 0;
+            } else if (direction === "Space") {
+                this.xSpeed = 0;
+                this.ySpeed = 0;
+            }
+        };
+
+        Ball.prototype.draw = function () {
+            circle (this.x, this.y, this.r, true);
+        };
+
+        var ball = new Ball ();
+
+        var keyNames = {
+            87: "W",
+            65: "A",
+            83: "S",
+            68: "D",
+            32: "Space",
+            37: "Left",
+            38: "Up",
+            39: "Right",
+            40: "Down",
+            13: "Enter"
+        };
+
+        $("body").keydown (function (event) {
+            var direction = keyNames[event.keyCode];
+            Ball.keyPress(direction);
+        });
+
+        setInterval (function () {
+            ctx.clearRect (0, 0, width, height);
+            ball.draw ();
+            ball.move ();
+            ctx.strokeRect (0, 0, width, height);
+        }, 30);
+    </script>
+</body>
+</html>
