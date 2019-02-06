@@ -54,7 +54,7 @@
         };
 
         Ball.prototype.keyPress = function (direction) {
-            /*switch(direction) {
+            switch(direction) {
                 case "W":
                     this.xSpeed = 0;
                     this.ySpeed = -5;
@@ -75,23 +75,6 @@
                     this.xSpeed = 0;
                     this.ySpeed = 0;
                 break;
-            }*/
-
-            if (direction === "W" || direction === "Up") {
-                this.xSpeed = 0;
-                this.ySpeed = -5;
-            } else if (direction === "S" || direction === "Down") {
-                this.xSpeed = 0;
-                this.ySpeed = 5;
-            } else if (direction === "A" || direction === "Left") {
-                this.xSpeed = -5;
-                this.ySpeed = 0;
-            } else if (direction === "D" || direction === "Right") {
-                this.xSpeed = 5;
-                this.ySpeed = 0;
-            } else if (direction === "Space") {
-                this.xSpeed = 0;
-                this.ySpeed = 0;
             }
         };
 
@@ -116,7 +99,7 @@
 
         $("body").keydown (function (event) {
             var direction = keyNames[event.keyCode];
-            Ball.keyPress(direction);
+            ball.keyPress(direction);
         });
 
         setInterval (function () {
